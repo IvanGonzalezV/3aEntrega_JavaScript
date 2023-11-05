@@ -5,15 +5,33 @@ let inputLimiteSuperior = document.getElementById("inputLimiteSuperior");
 
 let calcularButton = document.getElementById("calcular-button");
 
+let operador = "multiply"; // Este Designa el Valor predeterminado (multiplicacion en esta app)
+
 calcularButton.addEventListener("click", () => {
     let numero = parseInt(inputNumero.value);
     let limiteSuperior = parseInt(inputLimiteSuperior.value);
 
     let tablaMultiplicar = [];
 
+    // Ternarios para el operador sque se selccione
+    let operatorValue = document.querySelector(".operation-button.active")?.value || operador;
+
     for (let i = 1; i <= limiteSuperior; i++) {
-        let resultado = numero * i;
-        tablaMultiplicar.push(`${numero} * ${i} = ${resultado}`);
+        let resultado;
+        switch (operatorValue) {
+            case "sum":
+                resultado = numero + i;
+                break;
+            case "subtract":
+                resultado = numero - i;
+                break;
+            case "divide":
+                resultado = numero / i;
+                break;
+            default:
+                resultado = numero * i;
+        }
+        tablaMultiplicar.push(`${numero} ${operatorValue} ${i} = ${resultado}`);
     }
 
     let resultadosDiv = document.getElementById("resultados");
@@ -22,7 +40,7 @@ calcularButton.addEventListener("click", () => {
     inputNumero.value = numero;
     inputLimiteSuperior.value = limiteSuperior;
 
-    registrarCombinacion(numero, limiteSuperior);
+    registrarCombinacion(numero, limiteSuperior, operatorValue);
 });
 
 let clearButton = document.getElementById("clear-button");
@@ -37,8 +55,8 @@ clearButton.addEventListener("click", () => {
 
 let ultimasCombinaciones = [];
 
-function registrarCombinacion(numero, limiteSuperior) {
-    ultimasCombinaciones.unshift({ numero, limiteSuperior });
+function registrarCombinacion(numero, limiteSuperior, operatorValue) {
+    ultimasCombinaciones.unshift({ numero, limiteSuperior, operator: operatorValue });
     llenarListaDesplegable();
 }
 
@@ -47,24 +65,32 @@ function llenarListaDesplegable() {
     select.innerHTML = '<option value="" disabled selected>Última Combinación</option>';
     for (const combinacion of ultimasCombinaciones) {
         const option = document.createElement("option");
-        option.value = `${combinacion.numero} * ${combinacion.limiteSuperior}`;
-        option.text = `${combinacion.numero} * ${combinacion.limiteSuperior}`;
+        option.value = `${combinacion.numero} ${combinacion.operator} ${combinacion.limiteSuperior}`;
+        option.text = `${combinacion.numero} ${combinacion.operator} ${combinacion.limiteSuperior}`;
         select.appendChild(option);
     }
 }
 
-/* storage */
+// Aqui establezco la clase 'active' en el botón seleccionado cuando el usuario haga clic en alguno de los botons de operación
+const operationButtons = document.querySelectorAll(".operation-button");
+operationButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        operationButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+    });
+});
 
+// Función para guardar resultados en el almacenamiento local (storage)
 function guardarResultadosEnLocalStorage() {
-    localStorage.setItem('tablaMultiplicar', JSON.stringify(tablaMultiplicar));
+    localStorage.setItem('tablaMultiplicar', JSON.stringify(ultimasCombinaciones));
 }
 
 window.addEventListener('load', () => {
     if (localStorage.getItem('tablaMultiplicar')) {
-        tablaMultiplicar = JSON.parse(localStorage.getItem('tablaMultiplicar'));
-        let resultadosDiv = document.getElementById('resultados');
-        resultadosDiv.innerHTML = tablaMultiplicar.join('<br>');
+        ultimasCombinaciones = JSON.parse(localStorage.getItem('tablaMultiplicar'));
+        llenarListaDesplegable();
     }
 });
+
 
 
