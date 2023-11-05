@@ -3,18 +3,13 @@ console.log("Curso de JS");
 let inputNumero = document.getElementById("inputNumero");
 let inputLimiteSuperior = document.getElementById("inputLimiteSuperior");
 
-let floatingInput = document.getElementById("floatingInput");
-let floatingLimiteSuperior = document.getElementById("floatingLimiteSuperior");
-
-let tablaMultiplicar = [];
-
 let calcularButton = document.getElementById("calcular-button");
 
 calcularButton.addEventListener("click", () => {
     let numero = parseInt(inputNumero.value);
     let limiteSuperior = parseInt(inputLimiteSuperior.value);
 
-    tablaMultiplicar = [];
+    let tablaMultiplicar = [];
 
     for (let i = 1; i <= limiteSuperior; i++) {
         let resultado = numero * i;
@@ -24,43 +19,31 @@ calcularButton.addEventListener("click", () => {
     let resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = tablaMultiplicar.join("<br>");
 
-    
-    floatingInput.value = numero; 
-    floatingLimiteSuperior.value = limiteSuperior; 
+    inputNumero.value = numero;
+    inputLimiteSuperior.value = limiteSuperior;
 
-    
     registrarCombinacion(numero, limiteSuperior);
 });
 
-
-
 let clearButton = document.getElementById("clear-button");
 
-function clearResults() {
+clearButton.addEventListener("click", () => {
+    let resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = '';
-    floatingInput.value = ''; 
-    floatingLimiteSuperior.value = ''; 
-}
-
-clearButton.addEventListener("click", clearResults);
+    inputNumero.value = '';
+    inputLimiteSuperior.value = '';
+});
 
 let ultimasCombinaciones = [];
 
 function registrarCombinacion(numero, limiteSuperior) {
     ultimasCombinaciones.unshift({ numero, limiteSuperior });
-
-    if (ultimasCombinaciones.length > 20) {
-        ultimasCombinaciones.pop();
-    }
-
     llenarListaDesplegable();
 }
 
 function llenarListaDesplegable() {
     const select = document.getElementById("ultimas-combinaciones");
-
-    select.innerHTML = '<option value="" disabled selected>Última Combinacion</option>';
-
+    select.innerHTML = '<option value="" disabled selected>Última Combinación</option>';
     for (const combinacion of ultimasCombinaciones) {
         const option = document.createElement("option");
         option.value = `${combinacion.numero} * ${combinacion.limiteSuperior}`;
@@ -68,3 +51,4 @@ function llenarListaDesplegable() {
         select.appendChild(option);
     }
 }
+
