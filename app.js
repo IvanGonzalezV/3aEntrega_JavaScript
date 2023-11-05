@@ -32,6 +32,7 @@ clearButton.addEventListener("click", () => {
     resultadosDiv.innerHTML = '';
     inputNumero.value = '';
     inputLimiteSuperior.value = '';
+    guardarResultadosEnLocalStorage();
 });
 
 let ultimasCombinaciones = [];
@@ -51,4 +52,19 @@ function llenarListaDesplegable() {
         select.appendChild(option);
     }
 }
+
+/* storage */
+
+function guardarResultadosEnLocalStorage() {
+    localStorage.setItem('tablaMultiplicar', JSON.stringify(tablaMultiplicar));
+}
+
+window.addEventListener('load', () => {
+    if (localStorage.getItem('tablaMultiplicar')) {
+        tablaMultiplicar = JSON.parse(localStorage.getItem('tablaMultiplicar'));
+        let resultadosDiv = document.getElementById('resultados');
+        resultadosDiv.innerHTML = tablaMultiplicar.join('<br>');
+    }
+});
+
 
