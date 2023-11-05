@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+</head>
+
+<header>
+
+    <div id="toggle-button" class="toggle-button">Enter Quiz Mode</div>
+
+</header>
+
+<body>
+
+    <div class="container">
+        <div class="inputdata">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="inputNumero" placeholder="Enter Multiplicando">
+                <label for="inputNumero">Operador</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="inputLimiteSuperior" placeholder="Enter Multiplicador">
+                <label for="inputLimiteSuperior">Límite</label>
+            </div>
+
+            <div class="operation-buttons1">
+                <button type="button" class="operation-button" value="sum">➕</button>
+                <button type="button" class="operation-button" value="subtract">➖</button>
+                <button type="button" class="operation-button" value="multiply">✖️</button>
+                <button type="button" class="operation-button" value="divide">➗</button>
+            </div>
+        </div>
+        <div id="resultados" class="resultados">
+        </div>
+
+        <button id="calcular-button">Calcular Tabla</button>
+
+        <button id="clear-button">
+            <span>
+                Clear
+            </span>
+        </button>
+
+    </div>
+
+    <div class="search-bar">
+        <select id="ultimas-combinaciones">
+            <option value="" disabled selected>Última Combinacion</option>
+        </select>
+    </div>
+
+
+
+
+
+
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
