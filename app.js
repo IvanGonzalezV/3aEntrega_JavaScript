@@ -92,9 +92,6 @@ const operatorSymbols = {
     divide: '➗'
 };
 
-
-
-
 // Función para guardar resultados en el almacenamiento local (storage)
 function guardarResultadosEnLocalStorage() {
     localStorage.setItem('tablaMultiplicar', JSON.stringify(ultimasCombinaciones));
