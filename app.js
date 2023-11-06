@@ -17,22 +17,27 @@ calcularButton.addEventListener("click", () => {
     let operatorValue = document.querySelector(".operation-button.active")?.value || operador;
 
     for (let i = 1; i <= limiteSuperior; i++) {
-        let resultado;
-        switch (operatorValue) {
-            case "sum":
-                resultado = numero + i;
-                break;
-            case "subtract":
-                resultado = numero - i;
-                break;
-            case "divide":
-                resultado = numero / i;
-                break;
-            default:
-                resultado = numero * i;
-        }
-        tablaMultiplicar.push(`${numero} ${operatorValue} ${i} = ${resultado}`);
+    let resultado;
+    switch (operatorValue) {
+        case "sum":
+            resultado = numero + i;
+            break;
+        case "subtract":
+            resultado = numero - i;
+            break;
+        case "divide":
+            resultado = numero / i;
+            break;
+        default:
+            resultado = numero * i;
     }
+
+    // Usa el mapeo para obtener el símbolo correspondiente
+    let operatorSymbol = operatorSymbols[operatorValue];
+
+    tablaMultiplicar.push(`${numero} ${operatorSymbol} ${i} = ${resultado}`);
+}
+
 
     let resultadosDiv = document.getElementById("resultados");
     resultadosDiv.innerHTML = tablaMultiplicar.join("<br>");
@@ -79,6 +84,16 @@ operationButtons.forEach((button) => {
         button.classList.add("active");
     });
 });
+
+const operatorSymbols = {
+    sum: '➕',
+    subtract: '➖',
+    multiply: '✖️',
+    divide: '➗'
+};
+
+
+
 
 // Función para guardar resultados en el almacenamiento local (storage)
 function guardarResultadosEnLocalStorage() {
